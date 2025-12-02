@@ -1,0 +1,3 @@
+cat /home/bitroidpss/.ssh/id_rsa.pub
+ansible-vault create pss_ssh_key.yml
+public_key: "ssh-rsa TestTestTestTes... bitroidpss@host"

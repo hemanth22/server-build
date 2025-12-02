@@ -1,0 +1,35 @@
+- name: Ensure SSH directory and files exist
+  hosts: localhost
+  remote_user: "{{ usern }}"
+  tasks:
+    - name: Create SSH directory
+      ansible.builtin.file:
+        path: "/home/{{ usern }}/.ssh"
+        owner: "{{ usern }}"
+        group: "{{ usern }}"
+        state: directory
+        mode: '0700'
+    
+    - name: Create empty known_hosts file
+      ansible.builtin.file:
+        path: "/home/{{ usern }}/.ssh/known_hosts"
+        owner: "{{ usern }}"
+        group: "{{ usern }}"
+        state: touch
+        mode: '0644'
+    
+    - name: Create empty authorized_keys file
+      ansible.builtin.file:
+        path: "/home/{{ usern }}/.ssh/authorized_keys"
+        owner: "{{ usern }}"
+        group: "{{ usern }}"
+        state: touch
+        mode: '0644'
+
+    - name: Create empty .bashrc file
+      ansible.builtin.file:
+        path: "/home/{{ usern }}/.bashrc"
+        owner: "{{ usern }}"
+        group: "{{ usern }}"
+        state: touch
+        mode: '0644'

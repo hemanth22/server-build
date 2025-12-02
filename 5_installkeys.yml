@@ -1,0 +1,13 @@
+- name: install bitroidpss keys to user
+  hosts: localhost
+  remote_user: "{{ usern }}"
+  vars_files:
+    - /var/tmp/pss_ssh_key.yml
+
+  tasks:
+    - name: Install public key of bitroidpss into authorized_keys
+      authorized_key:
+        user: "{{ usern }}"
+        state: present
+        key: "{{ public_key }}"
+

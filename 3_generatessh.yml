@@ -1,0 +1,15 @@
+---
+- name: Generate SSH key declaratively using the user module
+  hosts: localhost
+  remote_user: "{{ usern }}"
+  tasks:
+    - name: Ensure the user's SSH key is present and configured correctly
+      ansible.builtin.user:
+        name: "{{ ansible_user | default(omit) }}" # Uses the current SSH user
+        generate_ssh_key: true
+        ssh_key_type: rsa
+        ssh_key_bits: 2048
+        ssh_key_file: .ssh/id_rsa
+        ssh_key_passphrase: "" # Empty string for no passphrase
+        state: present
+      become: false # This task runs as the remote user, not root

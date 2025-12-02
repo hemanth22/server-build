@@ -1,0 +1,5 @@
+---
+- name: create user account
+  hosts: localhost
+  roles:
+    - hemanth22.createuser

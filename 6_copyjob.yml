@@ -1,0 +1,23 @@
+---
+- name: copy files from .ssh to /var/tmp
+  hosts: localhost
+  become: true
+  become_user: "{{ usern }}"
+  gather_facts: false
+  tasks:
+    - name: create a directory
+      ansible.builtin.file:
+        path: "/var/tmp/{{ usern }}/"
+        state: directory
+        owner: "{{ usern }}"
+        group: "{{ usern }}"
+        mode: "0777"
+
+    - name: copy public key
+      ansible.builtin.copy:
+        src: "/home/{{ usern }}/.ssh/id_rsa.pub"
+        dest: "/var/tmp/{{ usern }}/id_rsa.pub"
+        remote_src: true
+        owner: "{{ usern }}"
+        group: "{{ usern }}"
+        mode: '0644'

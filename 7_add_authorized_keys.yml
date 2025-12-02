@@ -1,0 +1,17 @@
+---
+- name: copy files from .ssh to /var/tmp
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: fetching keys from "{{ usern }}"
+      ansible.builtin.slurp:
+        src: "/var/tmp/{{ usern }}/id_rsa.pub"
+      register: keydata
+
+    - name: append key from fetched data
+      ansible.builtin.blockinfile:
+        path: "/home/{{ target_user }}/.ssh/authorized_keys"
+        block: |
+          ##server "{{ usern }}"
+          {{ keydata.content | b64decode }}
+        marker: ""
